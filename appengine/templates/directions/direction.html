@@ -1,0 +1,20 @@
+{% load direction_extras %}
+{% for result in results %}
+  <ul class="rounded">
+    <li>{{ result.time|total_time }}</li>
+  {% for route in result.path %}
+    <li>{{ route.station }}</li>
+    <li>
+      <span class="route">{{ route.route }}</span> {{ route.way }}<br />
+      {% if route.start %}
+        <span class="time">{{ route.start|route_time }} - {{ route.end|route_time }}</span>
+      {% else %}
+        {% if route.time %}
+          約{{ route.time }}分
+        {% endif %}
+      {% endif %}
+    </li>
+  {% endfor %}
+    <li>{{ goal }}</li>
+  </ul>
+{% endfor %}

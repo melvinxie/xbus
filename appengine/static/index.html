@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html manifest="cache.manifest">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる。iPhone, Androidなどをサポート" />
+  <meta name="keywords" content="京都,バス,市バス,経路,検索,モバイル,携帯,最寄,出発,到着,時刻,時間,kyoto,bus,iphone,andriod" />
+  <meta name="author" content="Mingmin Xie" />
+  <title>京都市バス</title>
+  <link rel="shortcut icon" href="/favicon.ico">
+  <script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/static/jqtouch/jqtouch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/static/extensions/jqt.location.js" type="text/javascript" charset="utf-8"></script>
+  <style type="text/css" media="screen">@import "/static/jqtouch/jqtouch.css";</style>
+  <style type="text/css" media="screen">@import "/static/themes/apple/theme.css";</style>
+  <style type="text/css" media="screen">
+  #jqt #readings {
+    text-align: center;
+  }
+  #jqt #readings span {
+    display: inline;
+    font-size: 17px;
+    margin: 0;
+    padding: 0 20px;
+  }
+  #jqt #readings a {
+    color: black;
+    display: inline;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 20px;
+  }
+  #jqt #direction li {
+    text-align: center;
+  }
+  #jqt #direction li span.route {
+    color: blue;
+  }
+  #jqt #direction li span.time {
+    color: darkorange;
+  }
+  #jqt #about p {
+    margin: 10px;
+  }
+  #jqt #about p a, #jqt #about_link {
+    color: #2A7090;
+    text-decoration: none;
+  }
+  </style>
+  <script type="text/javascript">
+  var jqt = $.jQTouch({
+    debug: false,
+    icon: '/static/icon.png',
+    icon4: '/static/icon4.png',
+    statusBar: 'black-translucent'
+  });
+  var field = 'from';
+  var from_station = '';
+  var to_station = '';
+  function supports_html5_storage() {
+    try {
+      return 'localStorage' in window && window['localStorage'] !== null;
+    } catch (e) {
+      return false;
+    }
+  }
+  function fill(station) {
+    if (field == 'from') {
+      from_station = station;
+      $('#from_link').text('出発地：' + station);
+      if (supports_html5_storage()) {
+        localStorage.from_station = station;
+      }
+    } else {
+      to_station = station;
+      $('#to_link').text('目的地：' + station);
+      if (supports_html5_storage()) {
+        localStorage.to_station = station;
+      }
+    }
+    jqt.goTo('#home', 'slideright');
+  }
+  $(function() {
+    if (supports_html5_storage()) {
+      if (localStorage.from_station) {
+        from_station = localStorage.from_station;
+        $('#from_link').text('出発地：' + from_station);
+      }
+      if (localStorage.to_station) {
+        to_station = localStorage.to_station;
+        $('#to_link').text('目的地：' + to_station);
+      }
+    }
+    var today = new Date();
+    if (today.getDay() == 0) {
+      $('#day').val('holiday');
+    } else if (today.getDay() == 6) {
+      $('#day').val('saturday');
+    } else {
+      $('#day').val('weekday');
+    }
+    $('#hour').val(String(today.getHours()));
+    $('#minute').val(String(today.getMinutes()));
+    $('#from_link').click(function() { field = 'from'; });
+    $('#to_link').click(function() { field = 'to'; });
+    $('#swap').click(function() {
+      var tmp = from_station;
+      from_station = to_station;
+      to_station = tmp;
+      $('#from_link').text('出発地：' + from_station);
+      $('#to_link').text('目的地：' + to_station);
+      if (supports_html5_storage()) {
+        localStorage.from_station = from_station;
+        localStorage.to_station = to_station;
+      }
+    });
+    function display(text) {
+      $('#message').empty().append(text);
+      $('#message').parent().show();
+    }
+    $('#nearby').bind('pageAnimationEnd', function(e, info) {
+      field = 'from';
+      if (!$(this).data('loaded')) {
+        var lookup = jqt.updateLocation(function(coords) {
+          if (coords) {
+            $('#nearby_stations').load(
+                '/nearby/?lat=' + coords.latitude + '&lng=' + coords.longitude,
+                function() {
+                  $(this).parent().data('loaded', true);
+                  $('#message').parent().hide();
+                });
+          } else {
+            display('Device not capable of geo-location.');
+          }
+        });
+        if (lookup) {
+          display('検索中...');
+        }
+      }
+    });
+    $('#direction').bind('pageAnimationEnd', function(e, info) {
+      $('#results').html('');
+      $('#msg').parent().show();
+      if (from_station && to_station && from_station != to_station) {
+        $('#msg').empty().append('検索中...');
+        $('#results').load(
+            '/direction/?from_station=' + encodeURI(from_station) +
+            '&to_station=' + encodeURI(to_station) + '&day=' + $('#day').val() +
+            '&hour=' + $('#hour').val() + '&minute=' + $('#minute').val(),
+            function() { $('#msg').parent().hide(); });
+      } else {
+        $('#msg').empty().append('まず出発地と目的地をお選びください。');
+      }
+    });
+  });
+  </script>
+</head>
+<body id="jqt">
+<div id="home" class="current">
+  <div class="toolbar">
+    <h1>京都市バス</h1>
+    <a id="swap" class="button" href="#">入替</a>
+  </div>
+  <ul class="rounded">
+    <li class="arrow"><a id="from_link" href="#nearby">出発地：</a></li>
+    <li class="arrow"><a id="to_link" href="#stations">目的地：</a></li>
+    <li style="color:black">
+      発時刻
+      <select id="day" name="day" style="display:inline;width:50px;margin-left:10px;color:black">
+        <option value="weekday">平日</option>
+        <option value="saturday">土曜</option>
+        <option value="holiday">休日</option>
+      </select>
+      <select id="hour" name="hour" style="display:inline;width:30px;margin-left:10px;color:black">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9" selected="selected">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+      </select>:
+      <select id="minute" name="minute"
+        style="display:inline;width:50px;margin-left:5px;color:black">
+        <option value="0">00</option>
+        <option value="1">01</option>
+        <option value="2">02</option>
+        <option value="3">03</option>
+        <option value="4">04</option>
+        <option value="5">05</option>
+        <option value="6">06</option>
+        <option value="7">07</option>
+        <option value="8">08</option>
+        <option value="9">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+        <option value="32">32</option>
+        <option value="33">33</option>
+        <option value="34">34</option>
+        <option value="35">35</option>
+        <option value="36">36</option>
+        <option value="37">37</option>
+        <option value="38">38</option>
+        <option value="39">39</option>
+        <option value="40">40</option>
+        <option value="41">41</option>
+        <option value="42">42</option>
+        <option value="43">43</option>
+        <option value="44">44</option>
+        <option value="45">45</option>
+        <option value="46">46</option>
+        <option value="47">47</option>
+        <option value="48">48</option>
+        <option value="49">49</option>
+        <option value="50">50</option>
+        <option value="51">51</option>
+        <option value="52">52</option>
+        <option value="53">53</option>
+        <option value="54">54</option>
+        <option value="55">55</option>
+        <option value="56">56</option>
+        <option value="57">57</option>
+        <option value="58">58</option>
+        <option value="59">59</option>
+      </select>
+    </li>
+  </ul>
+  <ul>
+    <li style="text-align:center"><a href="#direction">経路検索</a></li>
+  </ul>
+  <div style="text-align:center">
+    <p><a href="http://twitter.com/share" class="twitter-share-button"
+      data-text="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる"
+      data-count="horizontal" data-via="melvinxie"
+      data-lang="ja">Tweet</a><script type="text/javascript"
+      src="http://platform.twitter.com/widgets.js"></script></p>
+    <p style="margin-top:10px"><a id="about_link" href="#about">about</a></p>
+  </div>
+</div>
+<div id="nearby">
+  <div class="toolbar">
+    <h1>最寄バス停</h1>
+    <a class="back" href="#">戻る</a>
+    <a href="#stations" class="button slideup">全て</a>
+  </div>
+  <div class="info"><p id="message"></p></div>
+  <div id="nearby_stations">
+  </div>
+</div>
+<div id="stations">
+  <div class="toolbar">
+    <h1>バス停の頭文字</h1>
+    <a class="back" href="#">戻る</a>
+  </div>
+  <ul id="readings">
+    <li><a href="/list/a">あ</a><a href="/list/i">い</a><a href="/list/u">う</a><a href="/list/e">え</a><a href="/list/o">お</a></li>
+    <li><a href="/list/ka">か</a><a href="/list/ki">き</a><a href="/list/ku">く</a><a href="/list/ke">け</a><a href="/list/ko">こ</a></li>
+    <li><a href="/list/sa">さ</a><a href="/list/si">し</a><a href="/list/su">す</a><a href="/list/se">せ</a><a href="/list/so">そ</a></li>
+    <li><a href="/list/ta">た</a><a href="/list/ti">ち</a><a href="/list/tu">つ</a><a href="/list/te">て</a><a href="/list/to">と</a></li>
+    <li><a href="/list/na">な</a><a href="/list/ni">に</a><span>　</span><span>　</span><a href="/list/no">の</a></li>
+    <li><a href="/list/ha">は</a><a href="/list/hi">ひ</a><a href="/list/hu">ふ</a><a href="/list/he">へ</a><a href="/list/ho">ほ</a></li>
+    <li><a href="/list/ma">ま</a><a href="/list/mi">み</a><a href="/list/mu">む</a><a href="/list/me">め</a><a href="/list/mo">も</a></li>
+    <li><a href="/list/ya">や</a><span>　</span><a href="/list/yu">ゆ</a><span>　</span><a href="/list/yo">よ</a></li>
+    <li><a href="/list/ra">ら</a><a href="/list/ri">り</a><span>　</span><span>　</span><a href="/list/ro">ろ</a></li>
+    <li><a href="/list/wa">わ</a><span>　</span><span>　</span><span>　</span><span> </span></li>
+  </ul>
+</div>
+<div id="direction">
+  <div class="toolbar">
+    <h1>経路</h1>
+    <a class="back" href="#">戻る</a>
+  </div>
+  <div class="info"><p id="msg"></p></div>
+  <div id="results">
+  </div>
+</div>
+<div id="about">
+  <div class="toolbar">
+    <h1>About</h1>
+    <a class="back" href="#">戻る</a>
+  </div>
+  <p>このサイトは<a target="_webapp" href="http://twitter.com/melvinxie">@melvinxie</a>の個人プロジェクトです。</p>
+  <p>Mobile: iPhone, Android, Palm Preなどのスマートフォンでお使いください。</p>
+  <p>PC: 同じように使えます。<a target="_webapp" href="http://www.google.com/chrome/">Chrome</a>又は<a target="_webapp" href="http://www.apple.com/safari/">Safari</a>ブラウザでおすすめです。</p>
+  <p>Chromeユーザは<a target="_webapp" href="https://chrome.google.com/webstore/detail/icekoomnmdhnapaniobhkkofogifloif">Web Store App</a>もお使いください。</p>
+</div>
+</body>
+</html>

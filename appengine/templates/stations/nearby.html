@@ -1,0 +1,8 @@
+<ul class="rounded">
+{% for i, dist, station in nearby_stations %}
+<li><a href="#" onclick="fill('{{ station.0 }}')">{{ i }} {{ station.0 }} {{ dist }} m</a></li>
+{% endfor %}
+</ul>
+<div style="text-align:center">
+  <img src="{{ map_url }}" width="300" height="300" />
+</div>

@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# rev 10
+/
+/favicon.ico
+http://code.jquery.com/jquery-1.4.2.min.js
+/static/jqtouch/jqtouch.js
+/static/extensions/jqt.location.js
+/static/jqtouch/jqtouch.css
+/static/themes/apple/theme.css
+/static/themes/apple/img/chevron.png
+/static/themes/apple/img/pinstripes.png
+/static/themes/apple/img/backButton.png
+/static/themes/apple/img/toolbar.png
+/static/themes/apple/img/toolButton.png
+
+NETWORK:
+*

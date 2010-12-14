@@ -1,0 +1,10 @@
+{% load station_extras %}
+<div>
+  <div class="toolbar">
+    <h1>バス停選択</h1>
+    <a class="back" href="#">戻る</a>
+  </div>
+  <ul id="station_list" class="edgetoedge">
+    {{ stations|section }}
+  </ul>
+</div>
