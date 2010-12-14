@@ -1,0 +1,23 @@
+{
+  "name": "京都市バス",
+  "description": "京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる",
+  "version": "1.0.1",
+  "app": {
+    "urls": [
+      "http://www.xbus.info/"
+    ],
+    "launch": {
+      "container": "panel",
+      "height": 600, 
+      "width": 400,
+      "web_url": "http://www.xbus.info/"
+    }
+  },
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "permissions": [
+    "geolocation",
+    "unlimitedStorage"
+  ]
+}
