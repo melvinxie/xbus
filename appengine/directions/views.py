@@ -1,10 +1,7 @@
 from datetime import time
 from directions.models import Direction
 from django.shortcuts import render_to_response
-from stations.models import stations, station_id_map
-
-def index(request):
-    return render_to_response('directions/index.html')
+from stations.models import station_id_map
 
 def direction(request):
     from_station = request.GET['from_station']
