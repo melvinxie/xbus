@@ -50,12 +50,17 @@ class Direction(object):
         # TODO: cache good paths
         dist, prev = self.dijkstra(Direction.graph, s, t)
         paths = sorted(self.paths(prev, s, t, set([t])), key=len)
+        route_set = set()
         good_paths = []
         for path in paths:
             if len(path) > len(paths[0]) * 1.5 or len(good_paths) == 5:
                 break
             else:
-                good_paths.append(path)
+                routes = tuple(set(map(lambda v: v.split('-')[1].split('.')[0],
+                                       path[1:-1])))
+                if routes not in route_set:
+                    route_set.add(routes)
+                    good_paths.append(path)
         results = []
         for path in good_paths:
             time, result = self.sum_path(path, day, now)
