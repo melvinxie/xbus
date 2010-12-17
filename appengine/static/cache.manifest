@@ -1,14 +1,15 @@
 CACHE MANIFEST
-# rev 10.0
+# rev 10.3
+/
 /favicon.ico
 http://code.jquery.com/jquery-1.4.2.min.js
-http://maps.google.com/maps/api/js?sensor=true
-
+http://maps.google.com/maps/api/js?v=3.2&sensor=true
 /static/jqtouch/jqtouch.js
 /static/extensions/jqt.location.js
-/static/style.css
+/static/xbus.js
 /static/jqtouch/jqtouch.css
 /static/themes/apple/theme.css
+/static/style.css
 /static/themes/apple/img/chevron.png
 /static/themes/apple/img/pinstripes.png
 /static/themes/apple/img/backButton.png
