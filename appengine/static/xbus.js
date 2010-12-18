@@ -24,10 +24,17 @@ function fill(station) {
   }
   if (supports_html5_storage()) {
     localStorage.setItem(field + '_station', station);
-    if (localStorage.history) {
-      localStorage.history += ',' + station;
+    if (localStorage.hist) {
+      var hist = localStorage.hist.split(',');
+      if (hist.indexOf(station) == -1) {
+        hist.push(station);
+        if (hist.length > 10) {
+          hist.shift();
+        }
+        localStorage.hist = hist.join(',');
+      }
     } else {
-      localStorage.history = station;
+      localStorage.hist = station;
     }
   }
   jqt.goTo('#home', 'slideright');
@@ -73,29 +80,29 @@ $(function() {
   $('#selection').bind('pageAnimationEnd', function(e, info) {
     $('.toolbar h1', this).text({'from': '出発地', 'to': '目的地'}[field]);
     if (supports_html5_storage()) {
-      var history = [];
-      if (localStorage.history) {
-        history = localStorage.history.split(',');
+      var hist = [];
+      if (localStorage.hist) {
+        hist = localStorage.hist.split(',');
       } else {
         if (localStorage.from_station) {
-          history.push(from_station);
+          hist.push(from_station);
         }
         if (localStorage.to_station) {
-          history.push(to_station);
+          hist.push(to_station);
         }
-        if (history.length) {
-          localStorage.history = history.join(',');
+        if (hist.length) {
+          localStorage.hist = hist.join(',');
         }
       }
-      if (history.length) {
+      if (hist.length) {
         if (!$(this).data('loaded')) {
           $('#selection').append($('<h2>履歴</h2>'));
+          $('#selection').append($('<ul id="hist"></ul>'));
           $(this).data('loaded', true);
         }
-        $('#history').remove();
-        $('#selection').append($('<ul id="history"></ul>'));
-        history.forEach(function (s) {
-          $('#history').append(
+        $('#hist').html('');
+        hist.reverse().forEach(function (s) {
+          $('#hist').append(
               $('<li><a href="#" onclick="fill(\'' + s + '\')">' +
                 s + '</a></li>'));
         });
@@ -139,17 +146,30 @@ $(function() {
     $('#status').empty().append('検索中...');
     $('#status').parent().show();
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'address': $(this).val()},
+    var southWest = new google.maps.LatLng(34.88, 135.62);
+    var northEast = new google.maps.LatLng(35.1, 135.82);
+    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+    geocoder.geocode({address: $(this).val(), bounds: bounds, region: 'JP'},
                      function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        var latlng = results[0].geometry.location;
-        $('#query_stations').load(
-            '/nearby/?lat=' + latlng.lat() + '&lng=' + latlng.lng(),
-            function() {
-              $('#status').parent().hide();
-            });
+        var latlng;
+        for (var i = 0; i < results.length; i++) {
+          if (bounds.contains(results[i].geometry.location)) {
+            latlng = results[i].geometry.location;
+            break;
+          }
+        };
+        if (latlng) {
+          $('#query_stations').load(
+              '/nearby/?lat=' + latlng.lat() + '&lng=' + latlng.lng(),
+              function() { $('#status').parent().hide(); });
+        } else {
+          $('#status').empty().append(
+              '見つかりませんでした。別のキーワードでもう一度お試しください。');
+        }
       } else {
-        $('#status').empty().append(status);
+        $('#status').empty().append(
+            'ネットワーク通信が悪かったです。もう一度お試しください。');
       }
     });
   });
