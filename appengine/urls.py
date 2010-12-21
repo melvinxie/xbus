@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
+    (r'^$', 'timetables.views.index'),
     (r'^direction/$', 'directions.views.direction'),
     (r'^nearby/$', 'stations.views.nearby'),
     (r'^list/(?P<key>\w+)/$', 'stations.views.list'),

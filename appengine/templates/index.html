@@ -130,8 +130,8 @@
   <div style="text-align:center">
     <p><a href="http://twitter.com/share" class="twitter-share-button" data-text="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる" data-count="horizontal" data-via="melvinxie" data-lang="ja">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></p>
     <div style="margin-top:10px">
-      <script type="text/javascript">
-        <!--
+    {% if mobile %}
+      <script type="text/javascript"><!--
         // XHTML should not attempt to parse these strings, declare them CDATA.
         /* <![CDATA[ */
         window.googleAfmcRequest = {
@@ -141,9 +141,21 @@
           slotname: '5921776513',
         };
         /* ]]> */
-        //-->
+      //--></script>
+      <script type="text/javascript"    src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+    {% else %}
+      <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-3913702637460425";
+      /* xbus */
+      google_ad_slot = "2482435812";
+      google_ad_width = 234;
+      google_ad_height = 60;
+      //-->
       </script>
-      <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+      <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+    {% endif %}
     </div>
   </div>
 </div>

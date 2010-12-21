@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
 #     'django.contrib.sessions.middleware.SessionMiddleware',
 #     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'minidetector.Middleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -86,5 +87,5 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     'directions',
     'stations',
-    'timetables'
+    'timetables',
 )
