@@ -51,7 +51,7 @@ $(function() {
     }
   }
   var today = new Date();
-  if (today.getDay() == 0) {
+  if (HolidayHelper.isHoliday(today)) {
     $('#day').val('holiday');
   } else if (today.getDay() == 6) {
     $('#day').val('saturday');
