@@ -1,0 +1,33 @@
+#jqt #readings {
+  text-align: center;
+}
+#jqt #readings span {
+  display: inline;
+  font-size: 17px;
+  margin: 0;
+  padding: 0 20px;
+}
+#jqt #readings a {
+  color: black;
+  display: inline;
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 20px;
+}
+#jqt #direction li {
+  text-align: center;
+}
+#jqt #direction li span.route {
+  color: blue;
+}
+#jqt #direction li span.time {
+  color: darkorange;
+}
+#jqt #about p {
+  margin: 10px;
+}
+#jqt #about p a, #jqt #about_link {
+  color: #2A7090;
+  text-decoration: none;
+}

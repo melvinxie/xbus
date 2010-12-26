@@ -4,10 +4,6 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /
-  static_files: static/index.html
-  upload: static/index.html
-
 - url: /intro.*
   static_files: static/intro.html
   upload: static/intro.html
