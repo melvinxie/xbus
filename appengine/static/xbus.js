@@ -51,7 +51,11 @@ $(function() {
     }
   }
   var today = new Date();
-  if (HolidayHelper.isHoliday(today)) {
+  if (today.getDay() == 0 ||
+      today.getMonth() == 8 && today.getDate() >= 14 && today.getDate() <= 16 ||
+      today.getMonth() == 0 && today.getDate() >= 29 ||
+      today.getMonth() == 1 && today.getDate() <= 4 ||
+      HolidayHelper.isHoliday(today)) {
     $('#day').val('holiday');
   } else if (today.getDay() == 6) {
     $('#day').val('saturday');
