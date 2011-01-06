@@ -1,17 +1,16 @@
 from django.shortcuts import render_to_response
+from heapq import nsmallest
 from stations.models import Station, stations, calc_distance
 import csv
 
 def nearby(request):
     latitude = float(request.GET['lat'])
     longitude = float(request.GET['lng'])
-    station_dists = []
-    for id, station in stations.iteritems():
-        station_dists.append(
-                (calc_distance(latitude, longitude, station[1], station[2]),
-                 station))
+    station_dists = [(calc_distance(latitude, longitude,
+                                    station[1], station[2]), station)
+                     for station in stations.itervalues()]
     nearby_stations = [[i + 1, item[0], item[1]]
-                       for i, item in enumerate(sorted(station_dists)[:5])]
+                       for i, item in enumerate(nsmallest(5, station_dists))]
     map_url = 'http://maps.google.com/maps/api/staticmap?size=300x300&sensor=true&mobile=true&markers=color:blue|%f,%f' % (latitude, longitude)
     for i, dist, station in nearby_stations:
         map_url += '&markers=color:red|label:%d|%f,%f' % (i,
