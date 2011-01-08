@@ -22,6 +22,10 @@ handlers:
   static_files: static/robots.txt
   upload: static/robots.txt
 
+- url: /google539e02a4f6c950a3.html
+  static_files: static/google539e02a4f6c950a3.html
+  upload: static/google539e02a4f6c950a3.html
+
 - url: /static
   static_dir: static
 
