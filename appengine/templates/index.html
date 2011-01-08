@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html manifest="cache.manifest">
 <head>
@@ -5,7 +6,7 @@
   <meta name="description" content="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる。iPhone, Androidなどをサポート" />
   <meta name="keywords" content="京都,バス,市バス,経路,検索,モバイル,携帯,最寄,出発,到着,時刻,時間,kyoto,bus,iphone,andriod" />
   <meta name="author" content="Mingmin Xie" />
-  <title>京都市バス</title>
+  <title>{% trans "Kyoto Bus" %}</title>
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="mixi-check-image" type="image/jpeg" href="http://www.xbus.info/static/img/1.jpg" />
   <script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
@@ -21,12 +22,12 @@
 <body id="jqt">
 <div id="home" class="current">
   <div class="toolbar">
-    <h1>京都市バス</h1>
+    <h1>{% trans "Kyoto Bus" %}</h1>
     <a class="button leftButton slideup" href="#about">About</a>
     <a id="swap" class="button" href="#">入替</a>
   </div>
   <ul class="rounded">
-    <li class="arrow"><a id="from_link" href="#selection">出発地：</a></li>
+    <li class="arrow"><a id="from_link" href="#selection">{% trans "From: " %}</a></li>
     <li class="arrow"><a id="to_link" href="#selection">目的地：</a></li>
     <li style="color:black">
       発時刻
