@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-07 17:15+0900\n"
+"POT-Creation-Date: 2011-01-08 21:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/index.html:9 templates/index.html.py:25
+#: templates/index.html:10 templates/index.html.py:26
 msgid "Kyoto Bus"
-msgstr "$B5~ET;T%P%9(B"
+msgstr "京都市バス"
 
-#: templates/index.html:30
+#: templates/index.html:28
+msgid "Swap"
+msgstr "入替"
+
+#: templates/index.html:31
 msgid "From: "
-msgstr "$B=PH/CO!'(B"
+msgstr "出発地："
+
+#: templates/index.html:32
+msgid "To: "
+msgstr "目的地："
+
+#: templates/index.html:34
+msgid "Time"
+msgstr "発時刻"
+
+#: templates/index.html:36
+msgid "Weekday"
+msgstr "平日"
+
+#: templates/index.html:37
+msgid "Saturday"
+msgstr "土曜"
+
+#: templates/index.html:38
+msgid "Sunday"
+msgstr "日曜"
+
+#: templates/index.html:132
+msgid "Route Search"
+msgstr "経路検索"
+
+#: templates/index.html:136
+msgid "Kyoto Bus Route Search"
+msgstr "京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる"
+
+#: templates/index.html:172 templates/index.html.py:183
+#: templates/index.html:192 templates/index.html.py:210
+#: templates/index.html:222
+msgid "Back"
+msgstr "戻る"
+
+#: templates/index.html:175
+#, fuzzy
+msgid "Nearby Bus Stops"
+msgstr "最寄バス停"
+
+#: templates/index.html:176
+msgid "Address, Place Search"
+msgstr "住所・地名検索"
+
+#: templates/index.html:177
+msgid "Bus Stops by Pronunciation"
+msgstr "50音から検索"
+
+#: templates/index.html:182
+msgid "Nearby"
+msgstr "最寄バス停"
+
+#: templates/index.html:209
+msgid "Place Search"
+msgstr "住所・地名検索"
+
+#: templates/index.html:221
+msgid "Directions"
+msgstr "経路"

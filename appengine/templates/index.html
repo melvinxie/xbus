@@ -1,4 +1,5 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html manifest="cache.manifest">
 <head>
@@ -24,17 +25,17 @@
   <div class="toolbar">
     <h1>{% trans "Kyoto Bus" %}</h1>
     <a class="button leftButton slideup" href="#about">About</a>
-    <a id="swap" class="button" href="#">入替</a>
+    <a id="swap" class="button" href="#">{% trans "Swap" %}</a>
   </div>
   <ul class="rounded">
     <li class="arrow"><a id="from_link" href="#selection">{% trans "From: " %}</a></li>
-    <li class="arrow"><a id="to_link" href="#selection">目的地：</a></li>
+    <li class="arrow"><a id="to_link" href="#selection">{% trans "To: " %}</a></li>
     <li style="color:black">
-      発時刻
+      {% trans "Time" %}
       <select id="day" name="day" style="display:inline;width:50px;margin-left:10px;color:black">
-        <option value="weekday">平日</option>
-        <option value="saturday">土曜</option>
-        <option value="holiday">休日</option>
+        <option value="weekday">{% trans "Weekday" %}</option>
+        <option value="saturday">{% trans "Saturday" %}</option>
+        <option value="holiday">{% trans "Sunday" %}</option>
       </select>
       <select id="hour" name="hour" style="display:inline;width:30px;margin-left:10px;color:black">
         <option value="0">0</option>
@@ -128,11 +129,11 @@
     </li>
   </ul>
   <ul>
-    <li style="text-align:center"><a href="#direction">経路検索</a></li>
+    <li style="text-align:center"><a href="#direction">{% trans "Route Search" %}</a></li>
   </ul>
   <div style="text-align:center">
     <p>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-text="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる" data-url="http://www.xbus.info" data-count="horizontal" data-via="melvinxie" data-lang="ja">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-text="{% trans "Kyoto Bus Route Search" %}" data-url="http://www.xbus.info" data-count="horizontal" data-via="melvinxie" data-lang="{{ LANGUAGE_CODE }}">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
       <a href="http://mixi.jp/share.pl" class="mixi-check-button" data-key="f96d28a990f49441ee413e618241a891888a851c">mixiチェック</a><script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script>
     </p>
     <div style="margin-top:10px">
@@ -167,19 +168,19 @@
 </div>
 <div id="selection">
   <div class="toolbar">
-    <h1>バス停</h1>
-    <a class="back" href="#">戻る</a>
+    <h1></h1>
+    <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <ul>
-    <li class="arrow"><a href="#nearby">最寄バス停</a></li>
-    <li class="arrow"><a href="#geocoder">住所・地名検索</a></li>
-    <li class="arrow"><a href="#stations">50音から検索</a></li>
+    <li class="arrow"><a href="#nearby">{% trans "Nearby Bus Stops" %}</a></li>
+    <li class="arrow"><a href="#geocoder">{% trans "Address, Place Search" %}</a></li>
+    <li class="arrow"><a href="#stations">{% trans "Bus Stops by Pronunciation" %}</a></li>
   </ul>
 </div>
 <div id="nearby">
   <div class="toolbar">
-    <h1>最寄バス停</h1>
-    <a class="back" href="#">戻る</a>
+    <h1>{% trans "Nearby" %}</h1>
+    <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <div class="info"><p id="message"></p></div>
   <div id="nearby_stations">
@@ -188,7 +189,7 @@
 <div id="stations">
   <div class="toolbar">
     <h1>バス停の頭文字</h1>
-    <a class="back" href="#">戻る</a>
+    <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <ul id="readings">
     <li><a href="/list/a">あ</a><a href="/list/i">い</a><a href="/list/u">う</a><a href="/list/e">え</a><a href="/list/o">お</a></li>
@@ -205,8 +206,8 @@
 </div>
 <div id="geocoder">
   <div class="toolbar">
-    <h1>住所・地名検索</h1>
-    <a class="back" href="#">戻る</a>
+    <h1>{% trans "Place Search" %}</h1>
+    <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <ul>
     <li><input id="query" placeholder="入力：住所、地名、郵便番号" type="text" /></li>
@@ -217,8 +218,8 @@
 </div>
 <div id="direction">
   <div class="toolbar">
-    <h1>経路</h1>
-    <a class="back" href="#">戻る</a>
+    <h1>{% trans "Directions" %}</h1>
+    <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <div class="info"><p id="msg"></p></div>
   <div id="results">
@@ -227,7 +228,7 @@
 <div id="about">
   <div class="toolbar">
     <h1>About</h1>
-    <a class="back" href="#">戻る</a>
+    <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <p>このサイトは<a target="_webapp" href="http://twitter.com/melvinxie">@melvinxie</a>の個人プロジェクトです。</p>
   <p>Mobile: iPhone, Android, Palm Preなどのスマートフォンでお使いください。</p>
