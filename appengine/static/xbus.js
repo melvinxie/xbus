@@ -14,13 +14,21 @@ function supports_html5_storage() {
     return false;
   }
 }
+function gettext(msgid) {
+  var value = catalog[msgid];
+  if (typeof(value) == 'undefined') {
+    return msgid;
+  } else {
+    return (typeof(value) == 'string') ? value : value[0];
+  }
+}
 function fill(station) {
   if (field == 'from') {
     from_station = station;
-    $('#from_link').text('出発地：' + station);
+    $('#from_link').text(gettext('From: ') + station);
   } else {
     to_station = station;
-    $('#to_link').text('目的地：' + station);
+    $('#to_link').text(gettext('To: ') + station);
   }
   if (supports_html5_storage()) {
     localStorage.setItem(field + '_station', station);
@@ -43,11 +51,11 @@ $(function() {
   if (supports_html5_storage()) {
     if (localStorage.from_station) {
       from_station = localStorage.from_station;
-      $('#from_link').text('出発地：' + from_station);
+      $('#from_link').text(gettext('From: ') + from_station);
     }
     if (localStorage.to_station) {
       to_station = localStorage.to_station;
-      $('#to_link').text('目的地：' + to_station);
+      $('#to_link').text(gettext('To: ') + to_station);
     }
   }
   var today = new Date();
@@ -70,8 +78,8 @@ $(function() {
     var tmp = from_station;
     from_station = to_station;
     to_station = tmp;
-    $('#from_link').text('出発地：' + from_station);
-    $('#to_link').text('目的地：' + to_station);
+    $('#from_link').text(gettext('From: ') + from_station);
+    $('#to_link').text(gettext('To: ') + to_station);
     if (supports_html5_storage()) {
       localStorage.from_station = from_station;
       localStorage.to_station = to_station;
