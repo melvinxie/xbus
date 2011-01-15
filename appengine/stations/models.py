@@ -4,9 +4,9 @@ import math
 
 stations = {}
 station_id_map = {}
-for id, name, latitude, longitude in csv.reader(open('stations.csv')):
+for id, name, english, latitude, longitude in csv.reader(open('stations.csv')):
     name = unicode(name, 'utf-8')
-    stations[id] = (name, float(latitude), float(longitude))
+    stations[id] = (name, float(latitude), float(longitude), english)
     station_id_map[name] = id
 """
 for station in Station.all():
