@@ -33,7 +33,7 @@
     <li class="arrow"><a id="to_link" href="#selection">{% trans "To: " %}</a></li>
     <li style="color:black">
       {% trans "Time" %}
-      <select id="day" name="day" style="display:inline;width:50px;margin-left:10px;color:black">
+      <select id="day" name="day" style="display:inline;width:70px;margin-left:30px;color:black">
         <option value="weekday">{% trans "Weekday" %}</option>
         <option value="saturday">{% trans "Saturday" %}</option>
         <option value="holiday">{% trans "Sunday" %}</option>
@@ -133,6 +133,9 @@
     <li style="text-align:center"><a href="#direction">{% trans "Route Search" %}</a></li>
   </ul>
   <div style="text-align:center">
+    <a target="_webapp" href="/en/">English</a>
+  </div>
+  <div style="text-align:center">
     <p>
       <a href="http://twitter.com/share" class="twitter-share-button" data-text="{% trans "Kyoto Bus Route Search" %}" data-url="http://www.xbus.info" data-count="horizontal" data-via="melvinxie" data-lang="{{ LANGUAGE_CODE }}">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
       <a href="http://mixi.jp/share.pl" class="mixi-check-button" data-key="f96d28a990f49441ee413e618241a891888a851c">mixiチェック</a><script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script>
@@ -189,7 +192,7 @@
 </div>
 <div id="stations">
   <div class="toolbar">
-    <h1>バス停の頭文字</h1>
+    <h1>{% trans "Initials" %}</h1>
     <a class="back" href="#">{% trans "Back" %}</a>
   </div>
   <ul id="readings">

@@ -1,6 +1,7 @@
+{% load station_extras %}
 <ul class="rounded">
 {% for i, dist, station in nearby_stations %}
-<li><a href="#" onclick="fill('{{ station.0 }}')">{{ i }} {{ station.0 }} {{ dist }} m</a></li>
+<li><a href="#" onclick="fill('{{ station|name }}')">{{ i }} {{ station|name }} {{ dist }} m</a></li>
 {% endfor %}
 </ul>
 <div style="text-align:center">
