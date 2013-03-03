@@ -7,7 +7,6 @@
   <meta name="author" content="Mingmin Xie" />
   <title>京都市バス</title>
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="mixi-check-image" type="image/jpeg" href="http://www.xbus.info/static/img/1.jpg" />
   <script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=true" type="text/javascript" charset="utf-8"></script>
   <script src="/static/jqtouch/jqtouch.js" type="text/javascript" charset="utf-8"></script>
@@ -29,6 +28,14 @@
   </script>
 </head>
 <body id="jqt">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <div id="home" class="current">
   <div class="toolbar">
     <h1>京都市バス</h1>
@@ -141,8 +148,14 @@
   </ul>
   <div style="text-align:center">
     <p>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-text="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる" data-url="http://www.xbus.info" data-count="horizontal" data-via="melvinxie" data-lang="ja">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-      <a href="http://mixi.jp/share.pl" class="mixi-check-button" data-key="f96d28a990f49441ee413e618241a891888a851c">mixiチェック</a><script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script>
+      <span style="display:inline-block;height:20px;vertical-align:top">
+      <a href="https://twitter.com/share" class="twitter-share-button"
+        data-url="http://www.xbus.info"
+        data-text="京都市バス経路検索：最寄バス停も出発到着時刻もすぐ分かる"
+        data-via="melvinxie" data-lang="ja">ツイート</a></span>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      <span class="fb-like" data-href="http://www.xbus.info" data-send="false"
+        data-layout="button_count" data-width="75" data-show-faces="false"></span>
     </p>
     <div style="margin-top:10px">
     {% if mobile %}
