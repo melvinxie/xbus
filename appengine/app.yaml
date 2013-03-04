@@ -13,6 +13,10 @@ handlers:
   static_files: static/favicon.ico
   upload: static/favicon.ico
 
+- url: /apple-touch-icon.png
+  static_files: static/icon4.png
+  upload: static/icon4.png
+
 - url: /cache.manifest
   static_files: static/cache.manifest
   mime_type: text/cache-manifest
