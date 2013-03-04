@@ -1,12 +1,9 @@
 import logging, os
 
 # Google App Engine imports.
-from google.appengine.dist import use_library
 from google.appengine.ext.webapp import util
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-
-use_library('django', '1.1')
 
 # Force Django to reload its settings.
 from django.conf import settings
