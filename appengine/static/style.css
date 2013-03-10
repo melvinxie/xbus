@@ -31,3 +31,6 @@
   color: #2A7090;
   text-decoration: none;
 }
+#jqt #results ul {
+  margin-top:0;
+}
