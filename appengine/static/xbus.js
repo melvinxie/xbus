@@ -64,9 +64,13 @@ $(function() {
   }
   $('#hour').val(String(today.getHours()));
   $('#minute').val(String(today.getMinutes()));
-  $('#from_link').click(function() { field = 'from'; });
-  $('#to_link').click(function() { field = 'to'; });
-  $('#swap').click(function() {
+  var user_agent = navigator.userAgent.toLowerCase();
+  var iphone = (user_agent.indexOf('iphone') != -1 ||
+                user_agent.indexOf('ipad') != -1) ? true : false;
+  var click_event = iphone ? 'tap' : 'click';
+  $('#from_link').bind(click_event, function() { field = 'from'; });
+  $('#to_link').bind(click_event, function() { field = 'to'; });
+  $('#swap').bind(click_event, function() {
     var tmp = from_station;
     from_station = to_station;
     to_station = tmp;
