@@ -27,7 +27,7 @@
 #jqt #about p {
   margin: 10px;
 }
-#jqt #about p a, #jqt #about_link {
+#jqt #about p a, #jqt .web_link {
   color: #2A7090;
   text-decoration: none;
 }
